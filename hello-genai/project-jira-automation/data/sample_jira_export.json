@@ -1,0 +1,40 @@
+{
+  "sprint": "Platform Sprint 14",
+  "release": "2026.09",
+  "issues": [
+    {
+      "key": "PLAT-101",
+      "summary": "Add weekly report export",
+      "status": "Done",
+      "priority": "High",
+      "assignee": "A. Balodi",
+      "completed_date": "2026-09-09",
+      "due_date": "2026-09-10"
+    },
+    {
+      "key": "PLAT-102",
+      "summary": "Validate Jira field mapping",
+      "status": "In Progress",
+      "priority": "Medium",
+      "assignee": "A. Balodi",
+      "due_date": "2026-09-15"
+    },
+    {
+      "key": "PLAT-103",
+      "summary": "Resolve deployment permissions",
+      "status": "Blocked",
+      "priority": "High",
+      "assignee": "Platform Team",
+      "due_date": "2026-09-08"
+    }
+  ],
+  "blockers": [
+    {
+      "description": "Deployment permissions are still pending",
+      "owner": "Platform Team"
+    }
+  ],
+  "risks": [
+    "The release may slip if deployment access is not granted this week"
+  ]
+}
