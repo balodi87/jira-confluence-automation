@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sprint signal | Platform Sprint 14</title>
+  <style>
+    :root {
+      --ink: #19232e;
+      --muted: #66717d;
+      --line: #d9dee2;
+      --paper: #f6f8f7;
+      --panel: #ffffff;
+      --navy: #12334a;
+      --teal: #167d78;
+      --teal-soft: #dff2ef;
+      --amber: #b86c0a;
+      --amber-soft: #fff1d8;
+      --red: #b64b43;
+      --red-soft: #f9e4e1;
+      --blue-soft: #e6eef6;
+      --shadow: 0 10px 30px rgba(25, 35, 46, .06);
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    button, select { font: inherit; }
+    button { cursor: pointer; }
+    .shell { max-width: 1480px; margin: 0 auto; padding: 32px 42px 64px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 52px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--navy); font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .mark { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--teal); color: white; font-size: 15px; }
+    .top-meta { display: flex; align-items: center; gap: 12px; color: var(--muted); font: 12px 'Helvetica Neue', Helvetica, sans-serif; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: end; gap: 48px; margin-bottom: 32px; }
+    .eyebrow { margin: 0 0 12px; color: var(--teal); font: 700 11px 'Helvetica Neue', Helvetica, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 760px; margin: 0; color: var(--navy); font-size: clamp(40px, 5vw, 68px); font-weight: 400; letter-spacing: -.03em; line-height: .98; }
+    .hero-copy { margin: 18px 0 0; color: var(--muted); font: 15px/1.6 'Helvetica Neue', Helvetica, sans-serif; }
+    .control { display: flex; flex-direction: column; gap: 8px; }
+    .control label { color: var(--muted); font: 700 10px 'Helvetica Neue', Helvetica, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+    select { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; background: white; color: var(--ink); font: 14px 'Helvetica Neue', Helvetica, sans-serif; }
+    .notice { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-left: 3px solid var(--amber); background: var(--amber-soft); color: #724709; font: 12px/1.5 'Helvetica Neue', Helvetica, sans-serif; }
+    .notice strong { display: block; margin-bottom: 2px; font-size: 13px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+    .metric, .panel { border: 1px solid var(--line); background: var(--panel); box-shadow: var(--shadow); }
+    .metric { min-height: 142px; padding: 20px; }
+    .metric-label { color: var(--muted); font: 700 10px 'Helvetica Neue', Helvetica, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+    .metric-value { margin: 18px 0 4px; color: var(--navy); font-size: 42px; line-height: 1; }
+    .metric-detail { color: var(--muted); font: 12px 'Helvetica Neue', Helvetica, sans-serif; }
+    .metric.accent { border-top: 4px solid var(--teal); }
+    .metric.warn { border-top: 4px solid var(--amber); }
+    .metric.alert { border-top: 4px solid var(--red); }
+    .grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 20px; margin-top: 20px; }
+    .panel { padding: 24px; }
+    .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+    .panel-title { margin: 0; color: var(--navy); font-size: 23px; font-weight: 400; }
+    .panel-subtitle { margin: 6px 0 0; color: var(--muted); font: 12px/1.45 'Helvetica Neue', Helvetica, sans-serif; }
+    .status-badge { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border-radius: 3px; font: 700 11px 'Helvetica Neue', Helvetica, sans-serif; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .status-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status-badge.warn { color: var(--amber); background: var(--amber-soft); }
+    .status-badge.good { color: var(--teal); background: var(--teal-soft); }
+    .status-badge.alert { color: var(--red); background: var(--red-soft); }
+    .forecast { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
+    .forecast-number { color: var(--navy); font-size: 32px; }
+    .forecast-label { margin-top: 6px; color: var(--muted); font: 12px 'Helvetica Neue', Helvetica, sans-serif; }
+    .progress-wrap { margin-top: 22px; }
+    .progress-meta { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--muted); font: 11px 'Helvetica Neue', Helvetica, sans-serif; }
+    .progress { height: 10px; overflow: hidden; background: #e8ecea; border-radius: 10px; }
+    .progress > span { display: block; height: 100%; background: var(--teal); border-radius: inherit; }
+    .trend { display: flex; align-items: end; gap: 14px; height: 126px; padding: 10px 8px 0; border-bottom: 1px solid var(--line); }
+    .bar-group { display: flex; flex: 1; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: end; }
+    .bar { width: min(42px, 70%); min-height: 5px; background: var(--teal); border-radius: 3px 3px 0 0; }
+    .bar.current { background: var(--navy); }
+    .bar-value, .bar-label { color: var(--muted); font: 10px 'Helvetica Neue', Helvetica, sans-serif; }
+    .trend-key { display: flex; justify-content: space-between; margin-top: 12px; color: var(--muted); font: 11px 'Helvetica Neue', Helvetica, sans-serif; }
+    .risk-list { display: grid; gap: 11px; }
+    .risk-row { display: grid; grid-template-columns: 132px 1fr 28px; align-items: center; gap: 10px; color: var(--muted); font: 12px 'Helvetica Neue', Helvetica, sans-serif; }
+    .risk-track { height: 7px; overflow: hidden; background: #eef0ef; border-radius: 5px; }
+    .risk-track span { display: block; height: 100%; background: var(--red); border-radius: inherit; }
+    .risk-count { color: var(--ink); font-weight: 700; text-align: right; }
+    .issues-panel { margin-top: 20px; padding: 0; overflow: hidden; }
+    .issues-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 24px 24px 18px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .filters select { width: auto; min-width: 132px; padding: 9px 10px; font-size: 12px; }
+    .clear-filter { display: none; border: 0; background: none; color: var(--teal); font: 700 11px 'Helvetica Neue', Helvetica, sans-serif; }
+    .clear-filter.visible { display: block; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; }
+    th { padding: 11px 24px; background: #f8faf9; color: var(--muted); font: 700 10px 'Helvetica Neue', Helvetica, sans-serif; letter-spacing: .08em; text-align: left; text-transform: uppercase; }
+    td { padding: 16px 24px; border-top: 1px solid var(--line); font: 13px 'Helvetica Neue', Helvetica, sans-serif; vertical-align: middle; }
+    .sortable { border: 0; padding: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+    .issue-key { color: var(--teal); font-weight: 700; }
+    .issue-summary { margin-top: 4px; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; font-size: 15px; }
+    .pill { display: inline-block; padding: 5px 8px; border-radius: 3px; font-size: 11px; }
+    .pill.done { background: var(--teal-soft); color: var(--teal); }
+    .pill.progress { background: var(--blue-soft); color: #3b6386; }
+    .pill.blocked { background: var(--red-soft); color: var(--red); }
+    .empty { padding: 28px 24px; color: var(--muted); font: 13px/1.5 'Helvetica Neue', Helvetica, sans-serif; text-align: center; }
+    .footer { margin-top: 20px; color: var(--muted); font: 11px 'Helvetica Neue', Helvetica, sans-serif; }
+    @media (max-width: 900px) { .shell { padding: 24px; } .hero { grid-template-columns: 1fr; gap: 24px; } .metrics { grid-template-columns: repeat(2, 1fr); } .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .shell { padding: 20px 16px 42px; } .topbar { margin-bottom: 34px; } .top-meta { display: none; } h1 { font-size: 43px; } .metrics { gap: 8px; } .metric { min-height: 122px; padding: 14px; } .metric-value { margin-top: 14px; font-size: 31px; } .panel { padding: 18px; } .issues-head { display: block; padding: 18px; } .filters { justify-content: flex-start; margin-top: 18px; } .filters select { flex: 1; min-width: 0; } th, td { padding-left: 18px; padding-right: 18px; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="mark">↗</span> Sprint signal</div>
+      <div class="top-meta"><span class="live-dot"></span> Local export · 11 Sep 2026</div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Product delivery / sprint health</p>
+        <h1 id="sprint-title">Platform Sprint 14</h1>
+        <p class="hero-copy">A clear read on what is moving, what is stuck, and what needs attention before the sprint closes.</p>
+      </div>
+      <div class="control">
+        <label for="sprint-select">Sprint view</label>
+        <select id="sprint-select">
+          <option value="current">Platform Sprint 14 · current</option>
+          <option value="previous">Platform Sprint 13 · historical</option>
+          <option value="older">Platform Sprint 12 · historical</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="notice"><span>ⓘ</span><div><strong>Story points and sprint history are not present in this export.</strong> Issue counts are live from the sample data; point metrics and historical bars will populate when those fields are available.</div></div>
+
+    <section class="metrics" aria-label="Sprint summary">
+      <article class="metric accent"><div class="metric-label">Issues complete</div><div class="metric-value" id="complete-count">1 / 3</div><div class="metric-detail" id="complete-detail">33% of committed issues</div></article>
+      <article class="metric"><div class="metric-label">Story points</div><div class="metric-value">—</div><div class="metric-detail">Not included in export</div></article>
+      <article class="metric warn"><div class="metric-label">Risk signals</div><div class="metric-value" id="risk-count">3</div><div class="metric-detail">Across four tracked categories</div></article>
+      <article class="metric alert"><div class="metric-label">Forecast</div><div class="metric-value" id="forecast-label">At risk</div><div class="metric-detail">Blocked work is past due</div></article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head"><div><h2 class="panel-title">Delivery forecast</h2><p class="panel-subtitle">A simple read based on completion, due dates, and blocked work.</p></div><span class="status-badge warn" id="forecast-badge">At risk</span></div>
+        <div class="forecast"><div><div class="forecast-number" id="forecast-date">16 Sep 2026</div><div class="forecast-label">Projected completion date</div></div><div><div class="forecast-number">—</div><div class="forecast-label">Confidence is unavailable without historical sprint data</div></div></div>
+        <div class="progress-wrap"><div class="progress-meta"><span>Issue completion</span><span id="progress-text">33%</span></div><div class="progress"><span id="progress-bar" style="width: 33%"></span></div></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div><h2 class="panel-title">Recent sprint trend</h2><p class="panel-subtitle">Completion rate by sprint, when historical exports are available.</p></div></div>
+        <div class="trend"><div class="bar-group"><span class="bar-value">—</span><div class="bar" style="height: 18%"></div><span class="bar-label">S12</span></div><div class="bar-group"><span class="bar-value">—</span><div class="bar" style="height: 38%"></div><span class="bar-label">S13</span></div><div class="bar-group"><span class="bar-value">33%</span><div class="bar current" style="height: 33%"></div><span class="bar-label">S14</span></div></div>
+        <div class="trend-key"><span>Historical data unavailable</span><span>Current sprint</span></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-head"><div><h2 class="panel-title">Risk signals</h2><p class="panel-subtitle">Select a category to filter the issue list below.</p></div></div>
+        <div class="risk-list"><button class="risk-row risk-filter" data-filter="Blocked" style="border:0;background:none;padding:0;text-align:left"><span>Blocked</span><span class="risk-track"><span style="width: 100%"></span></span><span class="risk-count" id="blocked-count">1</span></button><button class="risk-row risk-filter" data-filter="Overdue" style="border:0;background:none;padding:0;text-align:left"><span>Overdue</span><span class="risk-track"><span style="width: 100%"></span></span><span class="risk-count" id="overdue-count">1</span></button><button class="risk-row risk-filter" data-filter="High priority" style="border:0;background:none;padding:0;text-align:left"><span>High priority</span><span class="risk-track"><span style="width: 100%"></span></span><span class="risk-count" id="priority-count">2</span></button><button class="risk-row risk-filter" data-filter="Added scope" style="border:0;background:none;padding:0;text-align:left"><span>Added scope</span><span class="risk-track"><span style="width: 0%"></span></span><span class="risk-count">—</span></button></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div><h2 class="panel-title">Release context</h2><p class="panel-subtitle">The sample export currently points to this release.</p></div></div>
+        <div class="forecast"><div><div class="forecast-number">2026.09</div><div class="forecast-label">Target release</div></div><div><div class="forecast-number">1</div><div class="forecast-label">Open blocker</div></div></div>
+        <p class="panel-subtitle" style="margin-top: 22px">Deployment permissions remain pending with the Platform Team.</p>
+      </article>
+    </section>
+
+    <section class="panel issues-panel">
+      <div class="issues-head"><div><h2 class="panel-title">Sprint issues</h2><p class="panel-subtitle" id="issue-count-label">3 issues in the selected sprint</p></div><div class="filters"><select id="status-filter" aria-label="Filter by status"><option value="all">All statuses</option><option value="Done">Done</option><option value="In Progress">In progress</option><option value="Blocked">Blocked</option></select><select id="priority-filter" aria-label="Filter by priority"><option value="all">All priorities</option><option value="High">High</option><option value="Medium">Medium</option></select><button class="clear-filter" id="clear-filter">Clear filters</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Issue</th><th><button class="sortable" data-sort="status">Status ↕</button></th><th><button class="sortable" data-sort="priority">Priority ↕</button></th><th><button class="sortable" data-sort="assignee">Owner ↕</button></th><th><button class="sortable" data-sort="due_date">Due ↕</button></th></tr></thead><tbody id="issue-body"></tbody></table><div class="empty" id="empty-state" hidden>No issues match the selected filters.</div></div>
+    </section>
+    <p class="footer">Source: data/sample_jira_export.json · Last updated 11 Sep 2026</p>
+  </main>
+  <script>
+    const data = {
+      sprint: 'Platform Sprint 14',
+      release: '2026.09',
+      issues: [
+        { key: 'PLAT-101', summary: 'Add weekly report export', status: 'Done', priority: 'High', assignee: 'A. Balodi', completed_date: '2026-09-09', due_date: '2026-09-10' },
+        { key: 'PLAT-102', summary: 'Validate Jira field mapping', status: 'In Progress', priority: 'Medium', assignee: 'A. Balodi', due_date: '2026-09-15' },
+        { key: 'PLAT-103', summary: 'Resolve deployment permissions', status: 'Blocked', priority: 'High', assignee: 'Platform Team', due_date: '2026-09-08' }
+      ]
+    };
+    const state = { status: 'all', priority: 'all', sort: 'due_date', direction: 1 };
+    const today = new Date('2026-09-11T00:00:00');
+    const isOverdue = issue => issue.status !== 'Done' && new Date(issue.due_date) < today;
+    const statusClass = status => status === 'Done' ? 'done' : status === 'Blocked' ? 'blocked' : 'progress';
+    function visibleIssues() {
+      return data.issues.filter(issue => {
+        if (state.status === 'overdue' && !isOverdue(issue)) return false;
+        if (state.status !== 'all' && state.status !== 'overdue' && issue.status !== state.status) return false;
+        if (state.priority !== 'all' && issue.priority !== state.priority) return false;
+        return true;
+      }).sort((a, b) => String(a[state.sort]).localeCompare(String(b[state.sort])) * state.direction);
+    }
+    function renderIssues() {
+      const issues = visibleIssues();
+      document.getElementById('issue-body').innerHTML = issues.map(issue => `<tr><td><div class="issue-key">${issue.key}</div><div class="issue-summary">${issue.summary}</div></td><td><span class="pill ${statusClass(issue.status)}">${issue.status}</span></td><td>${issue.priority}</td><td>${issue.assignee}</td><td>${issue.due_date}${isOverdue(issue) ? '<br><span style="color:var(--red);font-size:11px">Overdue</span>' : ''}</td></tr>`).join('');
+      document.getElementById('empty-state').hidden = issues.length > 0;
+      document.getElementById('issue-count-label').textContent = `${issues.length} issue${issues.length === 1 ? '' : 's'} in the selected sprint`;
+      document.getElementById('clear-filter').classList.toggle('visible', state.status !== 'all' || state.priority !== 'all');
+    }
+    function setFilter(type, value) {
+      if (type === 'risk') {
+        if (value === 'Blocked') state.status = 'Blocked';
+        else if (value === 'Overdue') state.status = 'overdue';
+        else if (value === 'High priority') state.priority = 'High';
+        else return;
+      } else state[type] = value;
+      document.getElementById('status-filter').value = state.status === 'overdue' ? 'all' : state.status;
+      document.getElementById('priority-filter').value = state.priority;
+      renderIssues();
+      document.querySelector('.issues-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    document.getElementById('status-filter').addEventListener('change', event => { state.status = event.target.value; renderIssues(); });
+    document.getElementById('priority-filter').addEventListener('change', event => { state.priority = event.target.value; renderIssues(); });
+    document.getElementById('clear-filter').addEventListener('click', () => { state.status = 'all'; state.priority = 'all'; document.getElementById('status-filter').value = 'all'; document.getElementById('priority-filter').value = 'all'; renderIssues(); });
+    document.querySelectorAll('.risk-filter').forEach(button => button.addEventListener('click', () => setFilter('risk', button.dataset.filter)));
+    document.querySelectorAll('.sortable').forEach(button => button.addEventListener('click', () => { const sort = button.dataset.sort; state.direction = state.sort === sort ? state.direction * -1 : 1; state.sort = sort; renderIssues(); }));
+    document.getElementById('sprint-select').addEventListener('change', event => {
+      const historical = event.target.value !== 'current';
+      document.getElementById('sprint-title').textContent = historical ? event.target.options[event.target.selectedIndex].text.split(' · ')[0] : data.sprint;
+      document.querySelector('.notice').innerHTML = historical ? '<span>ⓘ</span><div><strong>Historical sprint data is not present in this export.</strong> Select the current sprint to view the available issue data.</div>' : '<span>ⓘ</span><div><strong>Story points and sprint history are not present in this export.</strong> Issue counts are live from the sample data; point metrics and historical bars will populate when those fields are available.</div>';
+      document.querySelectorAll('.metric-value').forEach((metric, index) => { if (historical && index === 0) metric.textContent = '—'; });
+      document.getElementById('issue-body').innerHTML = '';
+      document.getElementById('empty-state').hidden = !historical;
+      document.getElementById('empty-state').textContent = historical ? 'No issue export is available for this sprint.' : 'No issues match the selected filters.';
+      if (!historical) {
+        document.querySelector('.metrics .metric:first-child .metric-value').textContent = '1 / 3';
+        renderIssues();
+      }
+    });
+    renderIssues();
+  </script>
+</body>
+</html>
