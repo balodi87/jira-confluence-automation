@@ -101,9 +101,9 @@ Based on [project_spec.md](project_spec.md) and stakeholder requirements, this b
 ## GitHub Issues
 | Issue URL | Title | Created via MCP? |
 |-----------|-------|-----------------|
-| https://github.com/balodi87/jira-confluence-automation/issues/1 | 1.1 Directory Structure & Package Initialization | No |
-| https://github.com/balodi87/jira-confluence-automation/issues/2 | 1.2 Data Schema Definition (Pydantic Models) | No |
-| https://github.com/balodi87/jira-confluence-automation/issues/3 | 1.3 Mock Data Fixtures Creation | No |
+| https://github.com/balodi87/jira-confluence-automation/issues/1 | 1.1 Directory Structure & Package Initialization | Yes |
+| https://github.com/balodi87/jira-confluence-automation/issues/2 | 1.2 Data Schema Definition (Pydantic Models) | Yes |
+| https://github.com/balodi87/jira-confluence-automation/issues/3 | 1.3 Mock Data Fixtures Creation | Yes |
 
 ## MCP Tools Used
 - mcp_github_mcp_se_get_me
