@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "echo-windows": {
+      "command": "/opt/homebrew/bin/pwsh",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "/Users/ashutoshbalodi/workspace/.vscode/path/to/mcp-echo.ps1"]
+    }
+  }
+}
+

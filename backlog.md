@@ -6,16 +6,16 @@ Based on [project_spec.md](project_spec.md) and stakeholder requirements, this b
 
 ## Phase 1: Setup & Project Scaffolding
 
-- [ ] **1.1 Directory Structure & Package Initialization**
+- [ ] **1.1 Directory Structure & Package Initialization** (#1)
   - [ ] Create core project folders: `src/`, `src/models/`, `src/parsers/`, `src/generators/`, `src/utils/`, `templates/`, `data/fixtures/`, `tests/`, `output/`
   - [ ] Add `__init__.py` files across all Python source modules
   - [ ] Update `requirements.txt` to include `weasyprint`, `pandas`, `openpyxl`, `jinja2`, `pydantic`, `pytest`
-- [ ] **1.2 Data Schema Definition (Pydantic Models)**
+- [ ] **1.2 Data Schema Definition (Pydantic Models)** (#2)
   - [ ] Implement `MetricCard` model with status indicators (`green`, `amber`, `red`) and trend directions in `src/models/report_schema.py`
   - [ ] Implement `IncidentRecord` model with priority, timestamps, SLA compliance flag, and RCA tracking
   - [ ] Implement `ResourceSummary` and `PodCapacity` models supporting 40-headcount allocation and utilization tracking
   - [ ] Implement `VPReportPayload` top-level schema validating weekly and monthly report structures
-- [ ] **1.3 Mock Data Fixtures Creation**
+- [ ] **1.3 Mock Data Fixtures Creation** (#3)
   - [ ] Generate `data/fixtures/sample_servicenow_tickets.json` with realistic P1–P4 incidents and SLA timestamps
   - [ ] Generate `data/fixtures/sample_roster_allocation.xlsx` covering 40 resources across 4 pods (Core AMS, Enhancements, DevOps, QA)
   - [ ] Generate `data/fixtures/sample_jira_delivery.json` with sprint velocity, planned vs. delivered points, and blockers
