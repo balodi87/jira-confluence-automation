@@ -7,6 +7,10 @@
     "echo-windows": {
       "command": "/opt/homebrew/bin/pwsh",
       "args": ["-ExecutionPolicy", "Bypass", "-File", "/Users/ashutoshbalodi/workspace/.vscode/path/to/mcp-echo.ps1"]
+    },
+    "status-local": {
+      "command": "/opt/homebrew/bin/pwsh",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "/Users/ashutoshbalodi/workspace/.vscode/path/to/mcp-status.ps1"]
     }
   }
 }
@@ -14,14 +18,11 @@
 
 ## Configured Servers
 - echo-windows
+- status-local
 
 ## MCP Tool Test
-- Tool used: echo
+- Tool used: status
 - Output:
 ```text
---- STDOUT ---
-{"result":{"protocolVersion":"2024-11-05","serverInfo":{"name":"echo-windows","version":"1.0.0"},"capabilities":{"tools":{}}},"jsonrpc":"2.0","id":1}
-{"result":{"content":[{"text":"Hello MCP!","type":"text"}]},"jsonrpc":"2.0","id":2}
---- STDERR ---
---- EXIT CODE: 0 ---
+Module 13 MCP status server responded successfully.
 ```
