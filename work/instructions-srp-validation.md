@@ -16,5 +16,5 @@ Reviewed per [instructions/validate-instructions.agent.md](../instructions/valid
 
 **Result: 9/9 pass.** No SRP violations found — no refinement pass was needed.
 
-## Secondary issue (outside SRP scope)
-`main.agent.md` links to `write-meeting-notes.agent.md` and `generate-jira-query.agent.md`, neither of which exists in `instructions/`. This is a broken-reference issue, not an SRP violation, and is flagged here as a follow-up.
+## Secondary issue (outside SRP scope) — Resolved
+`main.agent.md` linked to `write-meeting-notes.agent.md` and `generate-jira-query.agent.md`, neither of which existed in `instructions/`. Fixed by removing those two dead entries and registering the three previously-uncataloged files (`validate-instructions.agent.md`, `calculate-compound-interest.agent.md`, `itsm_parser.agent.md`) per the catalog registration rule in `creating-instructions.agent.md`.
