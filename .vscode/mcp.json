@@ -3,6 +3,14 @@
     "echo-windows": {
       "command": "/opt/homebrew/bin/pwsh",
       "args": ["-ExecutionPolicy", "Bypass", "-File", "/Users/ashutoshbalodi/workspace/.vscode/path/to/mcp-echo.ps1"]
+    },
+    "status-local": {
+      "command": "/opt/homebrew/bin/pwsh",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "/Users/ashutoshbalodi/workspace/.vscode/path/to/mcp-status.ps1"]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
     }
   }
 }
