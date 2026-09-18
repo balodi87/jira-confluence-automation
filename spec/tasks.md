@@ -12,17 +12,19 @@ and failing before implementation, unless marked `[no-code]`.
 
 ## Phase 0 — Foundations & Decisions (Milestone M0)
 
-### T001 — Confirm ⚠️ assumptions with stakeholders `[no-code]`
+### T001 — Confirm ⚠️ assumptions with stakeholders `[no-code]` ✅ DONE
 - **Source**: `plan.md` §1 (all ⚠️-marked rows)
 - **Acceptance Criteria**:
-  - [ ] Dashboard interactivity model (read-only vs. actionable) confirmed
-        in writing.
-  - [ ] Auth model (shared service account vs. per-user impersonation)
-        confirmed.
-  - [ ] Ingestion method (polling-only for v1) confirmed.
-  - [ ] Decisions recorded back into `spec/specification.md` (remove/replace
-        `[NEEDS CLARIFICATION]` markers) or explicitly deferred with a
-        written rationale.
+  - [x] Dashboard interactivity model (read-only vs. actionable) confirmed
+        in writing — interactive, actor/viewer roles (see
+        `specification.md` → Resolved Decisions).
+  - [x] Auth model (shared service account vs. per-user impersonation)
+        confirmed — OIDC SSO for dashboard, shared service account for
+        Jira/Confluence access.
+  - [x] Ingestion method (polling-only for v1) confirmed.
+  - [x] Decisions recorded back into `spec/specification.md` (FR-015–017
+        resolved; new "Resolved Decisions" section added; checklist and
+        execution status updated).
 
 ### T002 — Amend constitution if scope changed `[no-code]`
 - **Source**: `plan.md` §1.4 (webhook reference)

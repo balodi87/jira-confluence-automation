@@ -100,15 +100,15 @@ decisions scattered across comments and meeting notes.
   from multiple linked sources (e.g., a Jira comment and a Confluence page
   referencing the same decision).
 
-*Needs clarification before `/plan`:*
-- **FR-015**: System MUST notify responsible users via [NEEDS CLARIFICATION:
-  notification channel(s) — email, Slack/Teams, Confluence-only, or
-  multiple?].
-- **FR-016**: System MUST support [NEEDS CLARIFICATION: number of concurrent
-  Jira projects/boards and expected issue volume, to size ingestion and
-  polling frequency].
-- **FR-017**: System MUST retain report/alert/action-item history for
-  [NEEDS CLARIFICATION: retention period not specified].
+- **FR-015**: System MUST notify responsible users via a Confluence alerts
+  page for v1 (email/chat integration is out of scope until a later
+  iteration).
+- **FR-016**: System MUST support at least 10 concurrent Jira
+  projects/boards and a combined total of up to ~5,000 open issues for v1;
+  ingestion/polling frequency is sized against this target.
+- **FR-017**: System MUST retain report/alert/action-item history
+  indefinitely for v1 (no automated purge); a retention/purge policy will
+  be defined in a later iteration.
 
 ### Key Entities
 
@@ -126,6 +126,24 @@ decisions scattered across comments and meeting notes.
 - **PublishTarget**: A Confluence destination — space, page ID/template,
   and the report type(s) it receives.
 
+## Resolved Decisions
+
+The following decisions were open as `[NEEDS CLARIFICATION]` or unstated
+contradictions after initial review (see `spec/clarify.md`). They have now
+been confirmed and are reflected in `spec/plan.md` §1 (full rationale/risk
+notes live there; this section records the ratified outcome):
+
+- **Dashboard interactivity**: The dashboard is interactive, not read-only.
+  Authenticated users with the "actor" role may acknowledge alerts and mark
+  action items complete; "viewer" role is read-only.
+- **Platform authentication**: Dashboard login uses org-wide OIDC SSO.
+  Jira/Confluence access uses one shared service account per environment
+  for v1 (not per-user impersonation).
+- **Ingestion method**: Polling only for v1; webhook-based ingestion is
+  deferred to a later iteration.
+- **Notification channel, scale, and retention**: See FR-015, FR-016, and
+  FR-017 above.
+
 ## Review & Acceptance Checklist
 
 ### Content Quality
@@ -136,12 +154,14 @@ decisions scattered across comments and meeting notes.
 - [x] All mandatory sections completed
 
 ### Requirement Completeness
-- [ ] No `[NEEDS CLARIFICATION]` markers remain (3 open — see FR-015–017)
+- [x] No `[NEEDS CLARIFICATION]` markers remain (resolved — see Resolved
+      Decisions and FR-015–017)
 - [x] Requirements are testable and unambiguous where not marked
 - [x] Success criteria are measurable (report generated, alert raised,
       action item tracked, each with explicit triggering conditions)
 - [x] Scope is clearly bounded (three automations: status report, overdue
-      alerts, decision/action tracker; dashboard is read-only surface)
+      alerts, decision/action tracker; dashboard is interactive for
+      "actor"-role users, read-only for "viewer"-role users)
 - [x] Dependencies and assumptions identified (Jira/Confluence
       availability, credential provisioning)
 
@@ -149,9 +169,9 @@ decisions scattered across comments and meeting notes.
 
 - [x] User description parsed
 - [x] Key concepts extracted (actors, actions, data, constraints)
-- [ ] Ambiguities marked (3 remaining — notification channel, scale,
-      retention)
+- [x] Ambiguities marked and resolved (notification channel, scale,
+      retention — see Resolved Decisions)
 - [x] User scenarios defined
 - [x] Requirements generated
 - [x] Entities identified
-- [ ] Review checklist passed (blocked on outstanding clarifications)
+- [x] Review checklist passed
