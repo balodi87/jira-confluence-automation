@@ -38,32 +38,40 @@ and failing before implementation, unless marked `[no-code]`.
 
 ## Phase 1 — Scaffolding & Infrastructure (Milestone M1)
 
-### T010 — Initialize backend project
+### T010 — Initialize backend project ✅ DONE
 - **Acceptance Criteria**:
-  - [ ] `backend/` has a working Express app skeleton (`npm start` boots a
-        server that responds to a health-check route).
-  - [ ] Linting (ESLint) and formatting configured and passing in CI.
+  - [x] `backend/` has a working Express app skeleton (`npm start` boots a
+        server that responds to a health-check route) — verified:
+        `GET /api/v1/health` → `{"status":"ok"}`.
+  - [ ] Linting (ESLint) and formatting configured and passing in CI —
+        deferred to T014 (no CI exists yet).
 
-### T011 — Initialize frontend project
+### T011 — Initialize frontend project ✅ DONE
 - **Acceptance Criteria**:
-  - [ ] `frontend/` has a working React 18 + Vite skeleton (`npm run dev`
-        serves a blank app).
-  - [ ] Linting configured and passing in CI.
+  - [x] `frontend/` has a working React 18 + Vite skeleton (`npm run dev`
+        serves a blank app) — verified rendering in-browser.
+  - [ ] Linting configured and passing in CI — Oxlint configured;
+        "passing in CI" deferred to T014 (no CI exists yet).
 
-### T012 — Docker Compose stack
+### T012 — Docker Compose stack ✅ DONE
 - **Source**: Constitution — Technology Stack, Development Workflow #4
 - **Acceptance Criteria**:
-  - [ ] `docker-compose.yml` brings up `frontend`, `backend`, and
-        `postgres:15` with a single `docker compose up`.
-  - [ ] Backend successfully connects to Postgres on container start.
+  - [x] `docker-compose.yml` brings up `frontend`, `backend`, and
+        `postgres:15` with a single `docker compose up` — verified: all
+        3 containers reach `Running`/`Healthy` state.
+  - [x] Backend successfully connects to Postgres on container start —
+        verified via migrations running against the `postgres` service
+        and the backend health check responding.
 
-### T013 — Migrations tooling
+### T013 — Migrations tooling ✅ DONE
 - **Source**: Constitution — Development Workflow #2
 - **Acceptance Criteria**:
-  - [ ] A migration runner (e.g., `node-pg-migrate` or equivalent) is
-        wired up with `up`/`down` commands.
-  - [ ] Running migrations against a fresh DB and rolling back leaves no
-        orphaned objects.
+  - [x] A migration runner (`node-pg-migrate`) is wired up with
+        `npm run migrate:up` / `migrate:down` commands.
+  - [x] Running migrations against a fresh DB and rolling back leaves no
+        orphaned objects — verified: rolled back all 6 migrations (down
+        to only the `pgmigrations` bookkeeping table) and re-applied
+        cleanly.
 
 ### T014 — CI pipeline
 - **Source**: Constitution Principle II
@@ -88,48 +96,54 @@ CI green on a no-op commit.
 
 ## Phase 2 — Data Model & Auth (Milestone M2)
 
-### T020 — `Issue` migration + model
+### T020 — `Issue` migration + model ✅ (migration only)
 - **Source**: FR-001, Key Entities → Issue
 - **Acceptance Criteria**:
-  - [ ] Migration creates `issues` table (key, summary, status, priority,
+  - [x] Migration creates `issues` table (key, summary, status, priority,
         assignee, sprint/release, due_date, completed_date, project/board
-        ref).
-  - [ ] Model-level unit test inserts/reads a row round-trip correctly.
+        ref) — verified via schema inspection (`\dt`) and up/down cycle.
+  - [ ] Model-level unit test inserts/reads a row round-trip correctly —
+        not yet written (no test suite exists; see T014).
 
-### T021 — `StatusReport` migration + model
+### T021 — `StatusReport` migration + model ✅ (migration only)
 - **Source**: FR-002/FR-003, Key Entities → StatusReport
 - **Acceptance Criteria**:
-  - [ ] Migration creates `status_reports` table (period, source
+  - [x] Migration creates `status_reports` table (period, source
         project/board/filter, issue lists or references, blockers, risks,
-        published Confluence page reference).
-  - [ ] Unit test round-trips a report record.
+        published Confluence page reference) — verified.
+  - [ ] Unit test round-trips a report record — not yet written.
 
-### T022 — `Alert` migration + model
+### T022 — `Alert` migration + model ✅ (migration only)
 - **Source**: FR-004/FR-005, Key Entities → Alert
 - **Acceptance Criteria**:
-  - [ ] Migration creates `alerts` table (issue ref, reason, raised_at,
-        notified recipients, acknowledgement_status).
-  - [ ] Unit test round-trips an alert record.
+  - [x] Migration creates `alerts` table (issue ref, reason, raised_at,
+        notified recipients, acknowledgement_status) — verified.
+  - [ ] Unit test round-trips an alert record — not yet written.
 
-### T023 — `ActionItem` migration + model
+### T023 — `ActionItem` migration + model ✅ (migration only)
 - **Source**: FR-006/FR-007, Key Entities → ActionItem
 - **Acceptance Criteria**:
-  - [ ] Migration creates `action_items` table (description, owner,
-        due_date, status, source_type, source_reference, team/project ref).
-  - [ ] Unit test round-trips an action item record.
+  - [x] Migration creates `action_items` table (description, owner,
+        due_date, status, source_type, source_reference, team/project ref)
+        — verified; sequenced *after* `teams` (T025) to fix the FK
+        ordering bug flagged in `spec/analyze.md` §3.2.
+  - [ ] Unit test round-trips an action item record — not yet written.
 
-### T024 — `PublishTarget` migration + model
+### T024 — `PublishTarget` migration + model ✅ (migration only)
 - **Source**: FR-003, Key Entities → PublishTarget
 - **Acceptance Criteria**:
-  - [ ] Migration creates `publish_targets` table (Confluence space, page
-        ID/template, report type(s) received).
-  - [ ] Unit test round-trips a publish target record.
+  - [x] Migration creates `publish_targets` table (Confluence space, page
+        ID/template, report type(s) received) — verified.
+  - [ ] Unit test round-trips a publish target record — not yet written.
 
-### T025 — `Team` migration + model
+### T025 — `Team` migration + model ✅ (migration only)
 - **Source**: `plan.md` §1 (Team entity assumption)
 - **Acceptance Criteria**:
-  - [ ] Migration creates `teams` table plus a mapping table to Jira
-        project/board(s) and member list, seedable from a config file.
+  - [x] Migration creates `teams` table plus a mapping table to Jira
+        project/board(s) and member list, seedable from a config file —
+        table created (as array columns rather than a separate mapping
+        table, for simplicity per Constitution Principle VI); config-file
+        loader itself is still open (see `spec/analyze.md` §3.6).
   - [ ] Unit test confirms a team resolves to its mapped project(s).
 
 ### T026 — OIDC login flow
