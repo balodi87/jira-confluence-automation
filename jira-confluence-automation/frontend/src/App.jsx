@@ -1,5 +1,3 @@
-import './App.css'
-
 import { useState } from 'react'
 import './App.css'
 import * as api from './api/client'
