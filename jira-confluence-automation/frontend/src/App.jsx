@@ -25,13 +25,20 @@ function LoginForm({ onLogin }) {
         <p>Sign in to continue (prototype dev login — not real OIDC).</p>
       </header>
       <form className="login-form" onSubmit={handleSubmit}>
-        <label>
+        <label htmlFor="login-username">
           Username
-          <input value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <input
+            id="login-username"
+            name="username"
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </label>
-        <label>
+        <label htmlFor="login-role">
           Role
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select id="login-role" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="viewer">Viewer (read-only)</option>
             <option value="actor">Actor (can acknowledge/complete)</option>
           </select>
